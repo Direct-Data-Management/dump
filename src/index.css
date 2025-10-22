@@ -1,1 +1,288 @@
 @import "tailwindcss";
+
+.fixed-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  z-index: 50;
+  transition: width 0.2s ease-in-out;
+}
+
+.fixed-sidebar.collapsed {
+  width: 50px;
+}
+
+.main-content {
+  padding-right: 10px;
+  margin-left: 250px;
+  transition: margin-left 0.2s ease-in-out;
+}
+
+.main-content.collapsed {
+  margin-left: 50px;
+}
+
+@media (max-width: 768px) {
+  .fixed-sidebar {
+    display: none;
+  }
+  .main-content {
+    margin-left: 0 !important;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  transition: width 0.3s;
+}
+::-webkit-scrollbar:hover {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1e88e5;
+}
+
+@plugin "tailwindcss-animate";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-table-background: var(--table-background);
+  --color-table-foreground: var(--table-foreground);
+  --color-table-header-background: var(--table-header-background);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-hover: var(--hover);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-button-color: var(--button-color);
+  --color-button-color-hover: var(--button-color-hover);
+  --color-input-box: var(--input-box);
+  --color-navigation: var(--navigation);
+  --color-error: var(--error-color);
+  --color-error-hover: var(--error-color-hover);
+  --color-warning: var(--warning-color);
+  --color-save: var(--save-color);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  :root {
+    --background: var(--color-white);
+    --foreground: var(--color-primary);
+    --table-background: #ffffff;
+    --table-foreground: #0a0a0a;
+    --table-header-background: #1c9bcd;
+    --popover: #ffffff;
+    --popover-foreground: #0a0a0a;
+    --hover: #1BAAE2;
+    --primary: #171717;
+    --primary-foreground: #fafafa;
+    --secondary: #e5e7eb;
+    --secondary-foreground: #171717;
+    --tertiary: #1790BF;
+    --tertiary-foreground: #137AA2;
+    --muted: #f3f4f6;
+    --muted-foreground: #99a1af;
+    --accent: #737378;
+    --accent-foreground: #171717;
+    --border: #212121;
+    --button-color: #1790BF;
+    --button-color-hover: #1FBFFF;
+    --error-color: #ed4337;
+    --error-color-hover: #a22f27;
+    --warning-color: #ffc400;
+    --save-color: #4CAF50;
+    --navigation: #1790BF;
+    --input-box: #f3f4f6;
+    --ring: #1790BF;
+    --json-editor-text-color: #000000;
+  }
+
+  .dark {
+    --background: #041525;
+    --foreground: #9ca3af;
+    --table-background: #021a2f;
+    --table-foreground: #fafafa;
+    --table-header-background: #04171f;
+    --popover: #0a0a0a;
+    --popover-foreground: #fafafa;
+    --hover: #1790BF;
+    --primary: #fafafa;
+    --primary-foreground: #171717;
+    --secondary: #012f4b;
+    --secondary-foreground: #fafafa;
+    --muted: #636363;
+    --muted-foreground: #6E8086;
+    --accent: #c8c1c1;
+    --accent-foreground: #fafafa;
+    --border: #f5f5f5;
+    --button-color: #1790BF;
+    --navigation: #1790BF;
+    --input-box: #5A5A5B;
+    --error-color: #ed4337;
+    --error-color-hover: #a22f27;
+    --warning-color: #ffc400;
+    --save-color: #4CAF50;
+    --ring: #1790BF;
+    --json-editor-text-color: #ffffff;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+/* Calendar input adjustments */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator,
+input[type="week"]::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  display: block;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+}
+input::-webkit-datetime-edit-fields-wrapper {
+  position: relative;
+}
+input::-webkit-datetime-edit {
+  position: relative;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+.dark ::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* Rich text editor theming */
+.ql-toolbar.ql-snow .ql-picker-label {
+  color: var(--primary) !important;
+}
+.ql-picker-options {
+  background-color: var(--background) !important;
+}
+.ql-snow .ql-stroke {
+  stroke: var(--primary) !important;
+}
+.ql-snow .ql-fill {
+  fill: var(--primary) !important;
+}
+.ql-editor {
+  color: var(--primary) !important;
+  background-color: var(--input-box) !important;
+}
+
+/* Custom search dropdowns */
+.searchWrapper {
+  background-color: var(--input-box) !important;
+}
+.searchWrapper :focus::placeholder {
+  color: var(--primary) !important;
+}
+.optionContainer {
+  background-color: var(--input-box) !important;
+  color: var(--primary) !important;
+}
+
+/* Radix/tab states */
+.data-\[selected\=true\]\:bg-accent {
+  &[data-selected="true"] {
+    background-color: var(--color-tertiary);
+  }
+}
+.data-\[selected\=true\]\:text-accent-foreground {
+  &[data-selected="true"] {
+    color: var(--color-primary);
+  }
+}
+.hover\:bg-accent {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-primary);
+    }
+  }
+}
+
+/* Phone input dropdown */
+.PhoneInputCountrySelect {
+  background-color: var(--color-input-box);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.button-group button{
+  background-color: var(--input-box) !important;
+  color: var(--primary) !important;
+}.ec-button:not(:disabled):hover{
+  background-color: var(--color-button-color-hover) !important;
+  color: var(--color-primary-foreground) !important;
+  border-color: var(--color-button-color-hover) !important;
+}
+.ec-button.ec-active{
+  background-color: var(--color-button-color) !important;
+  color: var(--color-primary-foreground) !important;
+  border-color: var(--color-button-color) !important;
+}
